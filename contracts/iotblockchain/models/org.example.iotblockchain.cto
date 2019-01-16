@@ -1,0 +1,67 @@
+/*
+ * Description: Deloitte IoT Blockchain for Supply Chain PoC - Model File
+ * Author: rosolanki@deloitte.com
+ * Date: 15th January 2019
+ */
+
+namespace org.example.iotblockchain
+
+enum ProductType {
+  o BANANAS
+  o APPLES
+  o PEARS
+  o PEACHES
+  o COFFEE
+  o MEDICINE
+}
+
+enum ProductStatus {
+  o CREATED
+  o IN_TRANSIT
+  o ARRIVED
+}
+
+abstract transaction ShipmentTransaction {
+  --> Product product
+}
+
+
+transaction GpsReading extends ShipmentTransaction {
+  o String readingTime
+  o String readingDate
+  o String latitude
+  o String longitude
+  o String accuracy
+}
+
+asset Product identified by ProductID {
+  o String ProductID
+  o ProductType type
+  o ProductStatus status
+  o Long unitCount
+  o GpsReading[] gpsReadings optional
+  --> Supplier supplier optional
+  --> Manufacturer manufacturer optional
+  --> Retailer retailer optional
+}
+
+
+
+participant Supplier identified by email {
+  o String email
+  o String address
+  o Double accountBalance
+}
+
+participant Manufacturer identified by email {
+  o String email
+  o String address
+  o Double accountBalance
+}
+
+participant Retailer identified by email {
+  o String email
+  o String address
+  o Double accountBalance
+}
+
